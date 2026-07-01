@@ -404,7 +404,7 @@ struct npc_zulian_prowler : public ScriptedAI
             if (arlokk->IsAlive())
                 arlokk->GetAI()->SetData(_sideData, 0);
         }
-        me->DespawnOrUnsummon(4000);
+        me->DespawnOrUnsummon(4s);
     }
 
     void UpdateAI(uint32 diff) override
