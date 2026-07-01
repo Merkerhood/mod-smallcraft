@@ -86,7 +86,7 @@ struct boss_arlokk : public BossAI
     void Reset() override
     {
         if (events.IsInPhase(PHASE_TWO))
-            me->HandleStatModifier(UNIT_MOD_DAMAGE_MAINHAND, TOTAL_PCT, 35.0f, false); // hack
+            me->ApplyStatPctModifier(UNIT_MOD_DAMAGE_MAINHAND, TOTAL_PCT, -35.0f); // hack
         _Reset();
         _summonCountA = 0;
         _summonCountB = 0;
@@ -289,7 +289,7 @@ struct boss_arlokk : public BossAI
                     events.ScheduleEvent(EVENT_RAVAGE, 10s, 14s, 0, PHASE_TWO);
                     events.ScheduleEvent(EVENT_TRANSFORM_BACK, 30s, 40s, 0, PHASE_TWO);
                     events.SetPhase(PHASE_TWO);
-                    me->HandleStatModifier(UNIT_MOD_DAMAGE_MAINHAND, TOTAL_PCT, 35.0f, true); // hack
+                    me->ApplyStatPctModifier(UNIT_MOD_DAMAGE_MAINHAND, TOTAL_PCT, 35.0f); // hack
                     break;
                 case EVENT_RAVAGE:
                     DoCastVictim(SPELL_RAVAGE, true);
@@ -301,7 +301,7 @@ struct boss_arlokk : public BossAI
                         DoCast(me, SPELL_VANISH_VISUAL);
                         me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 0, uint32(WEAPON_DAGGER));
                         me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 1, uint32(WEAPON_DAGGER));
-                        me->HandleStatModifier(UNIT_MOD_DAMAGE_MAINHAND, TOTAL_PCT, 35.0f, false); // hack
+                        me->ApplyStatPctModifier(UNIT_MOD_DAMAGE_MAINHAND, TOTAL_PCT, -35.0f); // hack
                         events.ScheduleEvent(EVENT_SHADOW_WORD_PAIN, 4s, 7s, 0, PHASE_ONE);
                         events.ScheduleEvent(EVENT_GOUGE, 12s, 15s, 0, PHASE_ONE);
                         events.ScheduleEvent(EVENT_TRANSFORM, 30s, 0, PHASE_ONE);
@@ -377,7 +377,7 @@ struct npc_zulian_prowler : public ScriptedAI
 
         if (Unit* arlokk = ObjectAccessor::GetUnit(*me, _instance->GetGuidData(NPC_ARLOKK)))
             me->GetMotionMaster()->MovePoint(0, arlokk->GetPositionX(), arlokk->GetPositionY(), arlokk->GetPositionZ());
-        _events.ScheduleEvent(EVENT_ATTACK, 6000);
+        _events.ScheduleEvent(EVENT_ATTACK, 6s);
     }
 
     void JustEngagedWith(Unit* /*who*/) override
@@ -503,7 +503,7 @@ public:
     void OnAfterDatabaseLoadCreatureTemplates(std::vector<CreatureTemplate*> creatureTemplates) override
     {
         // High Priestess Arlokk (14515) - Panther Boss
-        creatureTemplates[14515]->MechanicImmuneMask = 550183697; // can't be CC'd, but can be disorient/distract/root/snare/stun/freeze/daze
+        creatureTemplates[14515]->CreatureImmunitiesId = 14515; // can't be CC'd, but can be disorient/distract/root/snare/stun/freeze/daze
                                                                   // these other effects will be enabled/disabled by the boss script
     }
 };

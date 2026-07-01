@@ -136,7 +136,7 @@ struct boss_mandokir : public BossAI
         _killCount = 0;
         if (me->GetPositionZ() > 140.0f)
         {
-            events.ScheduleEvent(EVENT_CHECK_START, 1000);
+            events.ScheduleEvent(EVENT_CHECK_START, 1s);
             if (Creature* speaker = ObjectAccessor::GetCreature(*me, instance->GetGuidData(NPC_VILEBRANCH_SPEAKER)))
             {
                 if (!speaker->IsAlive())
@@ -232,7 +232,7 @@ struct boss_mandokir : public BossAI
         }
     }
 
-    void SetGUID(ObjectGuid const guid, int32 type) override
+    void SetGUID(ObjectGuid const& guid, int32 type) override
     {
         if (type == ACTION_CHARGE)
         {
@@ -276,7 +276,7 @@ struct boss_mandokir : public BossAI
         }
     }
 
-    void DamageDealt(Unit* doneTo, uint32& damage, DamageEffectType /*damagetype*/) override
+    void DamageDealt(Unit* doneTo, uint32& damage, DamageEffectType /*damagetype*/, SpellSchoolMask /*damageSchoolMask*/) override
     {
         if (doneTo && doneTo == me->GetVictim())
         {
@@ -425,11 +425,10 @@ struct boss_mandokir : public BossAI
                 case EVENT_CLEAVE:
                     {
                         std::list<Unit*> meleeRangeTargets;
-                        auto i = me->GetThreatMgr().GetThreatList().begin();
-                        for (; i != me->GetThreatMgr().GetThreatList().end(); ++i)
+                        for (ThreatReference* ref : me->GetThreatMgr().GetModifiableThreatList())
                         {
-                            Unit* target = (*i)->getTarget();
-                            if (me->IsWithinMeleeRange(target))
+                            Unit* target = ref->GetVictim();
+                            if (target && me->IsWithinMeleeRange(target))
                             {
                                 meleeRangeTargets.push_back(target);
                             }

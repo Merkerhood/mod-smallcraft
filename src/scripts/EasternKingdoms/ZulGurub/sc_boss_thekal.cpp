@@ -316,7 +316,7 @@ public:
     {
         // Zealot Zath (11348) - Tiger Boss Add
         // make kite-able
-        creatureTemplates[11348]->MechanicImmuneMask = 536936977; // can't be CC'd, but can be slowed/distracted/rooted/etc
+        creatureTemplates[11348]->CreatureImmunitiesId = 11348; // can't be CC'd, but can be slowed/distracted/rooted/etc
     }
 };
 

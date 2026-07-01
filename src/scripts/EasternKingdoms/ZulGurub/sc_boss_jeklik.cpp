@@ -114,7 +114,7 @@ struct boss_jeklik : public BossAI
 
         me->SetDisableGravity(false);
         me->SetReactState(REACT_PASSIVE);
-        BossAI::SetCombatMovement(false);
+        me->SetCombatMovement(false);
 
         DoCastSelf(SPELL_GREEN_CHANNELING, true);
     }
@@ -130,7 +130,7 @@ struct boss_jeklik : public BossAI
         me->SetDisableGravity(true);
         DoCastSelf(SPELL_BAT_FORM, true);
 
-        me->GetMotionMaster()->MovePath(PATH_JEKLIK_INTRO, false);
+        me->GetMotionMaster()->MovePath(PATH_JEKLIK_INTRO);
     }
 
     void PathEndReached(uint32 pathId) override
@@ -138,7 +138,7 @@ struct boss_jeklik : public BossAI
         BossAI::PathEndReached(pathId);
 
         me->SetDisableGravity(false);
-        SetCombatMovement(true);
+        me->SetCombatMovement(true);
         me->SetReactState(REACT_AGGRESSIVE);
 
         //
@@ -310,7 +310,7 @@ struct npc_batrider : public CreatureAI
             // start the flight loop
             me->SetCanFly(true);
             me->SetDisableGravity(true);
-            me->GetMotionMaster()->MoveSplinePath(PATH_BATRIDER_LOOP);
+            me->GetMotionMaster()->MovePath(PATH_BATRIDER_LOOP);
 
             // throw bomb
             _scheduler.Schedule(2s, [this](TaskContext context)
@@ -418,7 +418,7 @@ struct npc_batrider : public CreatureAI
                 // enable flying
                 me->SetCanFly(true);
                 // send the rider on its loop
-                me->GetMotionMaster()->MoveSplinePath(PATH_BATRIDER_LOOP);
+                me->GetMotionMaster()->MovePath(PATH_BATRIDER_LOOP);
             }
         }
         else if (_mode == BATRIDER_MODE_TRASH)
