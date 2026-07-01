@@ -2,6 +2,7 @@
 #include "Log.h"
 #include "ScriptMgr.h"
 #include "ScriptedCreature.h"
+#include "Player.h"
 #include "SharedDefines.h"
 #include "Smallcraft.h"
 #include "SmartAI.h"
@@ -297,7 +298,7 @@ private:
                     me->SetSpeed(MOVE_RUN, me->GetCreatureTemplate()->speed_run);
 
                     // normal size (overrides Enrage's size increase)
-                    me->SetObjectScale(me->GetCreatureTemplate()->scale);
+                    me->SetObjectScale(me->GetNativeObjectScale());
 
                     // no longer immune to taunt
                     LOG_DEBUG("module.SmallCraft", "SmallCraft:boss_kurinnaxx: Kurinnaxx is no longer immune to taunt.");
@@ -319,14 +320,14 @@ private:
                         _immuneToStun = false;
 
                         // restore normal size
-                        me->SetObjectScale(me->GetCreatureTemplate()->scale);
+                        me->SetObjectScale(me->GetNativeObjectScale());
                     });
 
                     // resume attacking
                     DoZoneInCombat();
                     me->SetReactState(REACT_AGGRESSIVE);
                     me->GetThreatMgr().ResetAllThreat();
-                    if (me->GetThreatMgr().SelectVictim())
+                    if (me->GetThreatMgr().ReselectVictim())
                     {
                         me->GetMotionMaster()->MoveChase(me->GetVictim());
                         me->Attack(me->GetVictim(), true);
@@ -353,7 +354,7 @@ public:
     void OnAfterDatabaseLoadCreatureTemplates(std::vector<CreatureTemplate*> creatureTemplates) override
     {
         // Kurinnaxx (15348) - Boss
-        creatureTemplates[NPC_KURINNAXX]->MechanicImmuneMask = 617297755; // allow stun
+        creatureTemplates[NPC_KURINNAXX]->CreatureImmunitiesId = 15348; // SmallCraft: stun-allowing immunities (Kurinnaxx defaults minus STUN); see data/sql/db-world/base/SmallCraft_Kurinnaxx.sql
     }
 };
 
