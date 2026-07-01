@@ -81,7 +81,7 @@ void Smallcraft_TempSpells_GroupScript::OnRemoveMember(Group* group, ObjectGuid 
  *
  * @param player The player that logged in.
  */
-void Smallcraft_TempSpells_PlayerScript::OnLogin(Player* player)
+void Smallcraft_TempSpells_PlayerScript::OnPlayerLogin(Player* player)
 {
     // if the player is gone, return
     if (!player)
@@ -114,7 +114,7 @@ void Smallcraft_TempSpells_PlayerScript::OnLogin(Player* player)
  * @param player The player that changed their spec.
  * @param newSlot The new spec slot.
  */
-void Smallcraft_TempSpells_PlayerScript::OnAfterSpecSlotChanged(Player* player, uint8 newSlot)
+void Smallcraft_TempSpells_PlayerScript::OnPlayerAfterSpecSlotChanged(Player* player, uint8 newSlot)
 {
     // if the player is gone, return
     if (!player)
@@ -145,7 +145,7 @@ void Smallcraft_TempSpells_PlayerScript::OnAfterSpecSlotChanged(Player* player, 
  * @param restore_percent The percentage of health and mana the player was restored to.
  * @param applySickness Whether or not the player was given resurrection sickness.
  */
-void Smallcraft_TempSpells_PlayerScript::OnPlayerResurrect(Player* player, float /*restore_percent*/, bool /*applySickness*/)
+void Smallcraft_TempSpells_PlayerScript::OnPlayerResurrect(Player* player, float /*restore_percent*/, bool& /*applySickness*/)
 {
     // if the player is gone, return
     if (!player)

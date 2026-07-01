@@ -31,9 +31,9 @@ class Smallcraft_TempSpells_PlayerScript : public PlayerScript
 {
 public:
     Smallcraft_TempSpells_PlayerScript() : PlayerScript("Smallcraft_TempSpells_PlayerScript") {}
-    void OnLogin(Player* player) override;
-    void OnAfterSpecSlotChanged(Player* player, uint8 newSlot) override;
-    void OnPlayerResurrect(Player* player, float restore_percent, bool applySickness) override;
+    void OnPlayerLogin(Player* player) override;
+    void OnPlayerAfterSpecSlotChanged(Player* player, uint8 newSlot) override;
+    void OnPlayerResurrect(Player* player, float restore_percent, bool& applySickness) override;
 };
 
 class Smallcraft_TempSpells_AllMapScript : public AllMapScript

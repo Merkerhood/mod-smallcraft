@@ -14,7 +14,7 @@ class Smallcraft_PlayerScript : public PlayerScript
 public:
     Smallcraft_PlayerScript() : PlayerScript("Smallcraft_PlayerScript") { }
 
-    void OnLogin(Player* player) override
+    void OnPlayerLogin(Player* player) override
     {
         if (sConfigMgr->GetOption<bool>("Smallcraft.Enable", false))
         {
