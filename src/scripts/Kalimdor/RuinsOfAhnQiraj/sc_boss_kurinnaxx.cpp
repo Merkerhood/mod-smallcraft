@@ -14,11 +14,6 @@
 #include "TaskScheduler.h"
 #include "../../src/server/scripts/Kalimdor/RuinsOfAhnQiraj/ruins_of_ahnqiraj.h"
 
-namespace ac
-{
-    #include "../../src/server/scripts/Kalimdor/RuinsOfAhnQiraj/boss_kurinnaxx.cpp"
-}
-
 namespace sc
 {
 enum Spells
@@ -327,7 +322,7 @@ private:
                     DoZoneInCombat();
                     me->SetReactState(REACT_AGGRESSIVE);
                     me->GetThreatMgr().ResetAllThreat();
-                    if (me->GetThreatMgr().ReselectVictim())
+                    if (me->GetThreatMgr().GetCurrentVictim())
                     {
                         me->GetMotionMaster()->MoveChase(me->GetVictim());
                         me->Attack(me->GetVictim(), true);
